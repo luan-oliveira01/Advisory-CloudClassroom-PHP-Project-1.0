@@ -11,12 +11,14 @@ Este repositório contém os relatórios de segurança, Prova de Conceito (PoC) 
 Para tal tarefa, realizo o download do repositório e a montagem do laboratório com os comandos abaixo:
 
 1. **Clonar o repositório-alvo:**
+   
    ```bash
    git clone [https://github.com/mathurvishal/CloudClassroom-PHP-Project.git](https://github.com/mathurvishal/CloudClassroom-PHP-Project.git)
 
 ```
 
 2. **Instalar dependências (Docker):**
+
 ```bash
 sudo apt update && sudo apt install docker.io -y
 
@@ -24,6 +26,7 @@ sudo apt update && sudo apt install docker.io -y
 
 
 3. **Subir a aplicação em container Docker:**
+4. 
 ```bash
 sudo docker run -d --name cloudclassroom-lab --restart=always -p 9292:80 bladscan/cloudclassroom-sqli:1.0
 
