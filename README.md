@@ -104,5 +104,3 @@ Cada pasta (`04-sqli` e `05-stored-xss`) contém o seguinte conjunto padronizado
 ```
 
 ```
-
-```
