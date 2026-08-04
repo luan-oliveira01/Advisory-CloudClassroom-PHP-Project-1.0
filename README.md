@@ -12,22 +12,19 @@ To set up the environment, download the target repository and build the lab usin
 1. **Clone the target repository:**
 
 ```bash
-git clone [https://github.com/mathurvishal/CloudClassroom-PHP-Project.git](https://github.com/mathurvishal/CloudClassroom-PHP-Project.git)
-
+git clone https://github.com/mathurvishal/CloudClassroom-PHP-Project.git
 ```
 
 2. **Install dependencies (Docker):**
 
 ```bash
 sudo apt update && sudo apt install docker.io -y
-
 ```
 
 3. **Run the application in a Docker container:**
 
 ```bash
 sudo docker run -d --name cloudclassroom-lab --restart=always -p 9292:80 bladscan/cloudclassroom-sqli:1.0
-
 ```
 
 ---
