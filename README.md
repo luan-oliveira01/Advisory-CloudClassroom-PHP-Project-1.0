@@ -1,6 +1,3 @@
-Aqui está o documento com a enumeração corrigida e a tradução para o inglês:
-
-```markdown
 # Advisory-CloudClassroom-PHP-Project-1.0
 *Security Advisories & Vulnerability Reports*
 
@@ -100,9 +97,5 @@ Each folder (`01-sqli` and `02-stored-xss`) contains the following standardized 
     ├── ADVISORY.md
     ├── VENDOR-EMAIL.md
     └── NIST.md
-
-```
-
-```
 
 ```
