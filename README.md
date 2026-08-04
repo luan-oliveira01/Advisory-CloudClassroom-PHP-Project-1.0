@@ -80,17 +80,17 @@ Data submitted through the form fields is stored directly into the database with
 
 ## 📁 5. Directory Structure
 
-Each folder (`01-sqli` and `02-stored-xss`) contains the following standardized set of documents:
+Each folder (`SQLi` and `Stored-XSS`) contains the following standardized set of documents:
 
 ```text
-├── 01-sqli/
+├── SQLi/
 │   ├── REPORT.md          # Full technical step-by-step report
 │   ├── poc.sh             # Functional, non-destructive PoC script
 │   ├── VULDB.md           # Submission template formatted for VulDB
 │   ├── ADVISORY.md        # GitHub Security Advisory draft
 │   ├── VENDOR-EMAIL.md    # Formal email draft for vendor disclosure
 │   └── NIST.md            # Report following NVD / NIST standards
-└── 02-stored-xss/
+└── Stored-XSS/
     ├── REPORT.md
     ├── poc.sh
     ├── VULDB.md
