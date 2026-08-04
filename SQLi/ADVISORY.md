@@ -12,7 +12,7 @@
 
 ## 1. Executive Summary
 
-A vulnerability was identified in **CloudClassroom-PHP-Project 1.0** (Vishal Mathur — `mathurvishal`), in the **updatefaculty.php** component, which allows an attacker (**Authentication: None (via Broken Access Control — item 00; original design requires admin session); User Interaction: None**) to exploit a **SQL Injection (UNION-based / error-based)** flaw.
+A vulnerability was identified in **CloudClassroom-PHP-Project 1.0** (Vishal Mathur — `mathurvishal`), in the **updatefaculty.php** component, which allows an attacker to exploit a **SQL Injection (UNION-based / error-based)** flaw.
 
 The numeric parameter `fid` is interpolated without quotes into the `SELECT` query. Within a numeric context, exploitation via `UNION SELECT` is possible. The queried table exposes 9 columns. Confirmed via unauthenticated dumping of administrator credentials.
 
