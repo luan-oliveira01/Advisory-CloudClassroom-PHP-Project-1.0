@@ -1,43 +1,43 @@
+Aqui está o documento com a enumeração corrigida e a tradução para o inglês:
 
+```markdown
 # Advisory-CloudClassroom-PHP-Project-1.0
 *Security Advisories & Vulnerability Reports*
 
-Este repositório contém os relatórios de segurança, Prova de Conceito (PoC) e documentações de divulgação responsável referentes às vulnerabilidades identificadas no componente `updatefaculty.php`.
+This repository contains security reports, Proofs of Concept (PoC), and responsible disclosure documentation regarding vulnerabilities identified in the `updatefaculty.php` component.
 
 ---
 
-## 🛠️ 1. Preparação do Ambiente de Testes
+## 🛠️ 1. Test Environment Setup
 
-Para tal tarefa, realizo o download do repositório e a montagem do laboratório com os comandos abaixo:
+To set up the environment, download the target repository and build the lab using the following commands:
 
-1. **Clonar o repositório-alvo:**
+1. **Clone the target repository:**
 
 ```bash
-   git clone [https://github.com/mathurvishal/CloudClassroom-PHP-Project.git](https://github.com/mathurvishal/CloudClassroom-PHP-Project.git)
+git clone [https://github.com/mathurvishal/CloudClassroom-PHP-Project.git](https://github.com/mathurvishal/CloudClassroom-PHP-Project.git)
+
 ```
 
-2. **Instalar dependências (Docker):**
+2. **Install dependencies (Docker):**
 
 ```bash
 sudo apt update && sudo apt install docker.io -y
 
 ```
 
+3. **Run the application in a Docker container:**
 
-3. **Subir a aplicação em container Docker:**
-4. 
 ```bash
 sudo docker run -d --name cloudclassroom-lab --restart=always -p 9292:80 bladscan/cloudclassroom-sqli:1.0
 
 ```
 
-
-
 ---
 
-## 🔍 2. Objeto de Estudo
+## 🔍 2. Subject of Study
 
-Ao executar o comando abaixo no diretório em que se encontra o repositório do CloudClassroom, pode-se notar que o arquivo sugerido para análise é destacado (`updatefaculty.php`):
+By running the command below inside the directory containing the CloudClassroom repository, you can observe that the target file for analysis is highlighted (`updatefaculty.php`):
 
 ```bash
 sudo docker run --rm -v $(pwd):/src returntocorp/semgrep semgrep scan --config=auto --no-git-ignore /src
@@ -46,60 +46,62 @@ sudo docker run --rm -v $(pwd):/src returntocorp/semgrep semgrep scan --config=a
 
 ---
 
-## 📌 Resumo das Vulnerabilidades
+## 📌 3. Vulnerability Summary
 
-| ID | Vulnerabilidade | Arquivo / Parâmetro | CVSS v3.1 | Severidade | CWE |
+| ID | Vulnerability | File / Parameter | CVSS v3.1 | Severity | CWE |
 | --- | --- | --- | --- | --- | --- |
-| **04** | SQL Injection (UNION-based) | `updatefaculty.php` (`fid`) | 9.1 | 🔴 Crítico | CWE-89 |
-| **05** | Stored Cross-Site Scripting (XSS) | `updatefaculty.php` *(múltiplos)* | 6.1 | 🟡 Médio | CWE-79 |
+| **01** | SQL Injection (UNION-based) | `updatefaculty.php` (`fid`) | 9.1 | 🔴 Critical | CWE-89 |
+| **02** | Stored Cross-Site Scripting (XSS) | `updatefaculty.php` *(multiple)* | 6.1 | 🟡 Medium | CWE-79 |
 
 ---
 
-## 🔍 Detalhamento dos Achados
+## 🔍 4. Findings Detail
 
-### 04. SQL Injection em `updatefaculty.php`
+### 01. SQL Injection in `updatefaculty.php`
 
-* **Vetor de CVSS v3.1:** `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N` (**9.1 - Crítico**)
+* **CVSS v3.1 Vector:** `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N` (**9.1 - Critical**)
 * **CWE:** CWE-89 (SQL Injection)
-* **Componente Afetado:** `updatefaculty.php` (Parâmetro `fid`)
+* **Affected Component:** `updatefaculty.php` (`fid` parameter)
 
-**Descrição:**
+**Description:**
 
-O parâmetro numérico `fid` é recebido via requisição HTTP e interpolado diretamente na consulta SQL `SELECT` sem sanitização ou uso de *prepared statements*. Como a interpolação ocorre em contexto numérico (sem aspas), é possível realizar exploração via `UNION SELECT`. A consulta de origem expõe 9 colunas, permitindo a extração não-autenticada de dados sensíveis, incluindo credenciais do administrador.
+The numeric parameter `fid` is received via HTTP request and directly interpolated into the `SELECT` SQL query without sanitization or the use of prepared statements. Because the interpolation occurs in a numeric context (without quotes), exploitation via `UNION SELECT` is possible. The original query exposes 9 columns, allowing unauthenticated extraction of sensitive data, including administrator credentials.
 
 ---
 
-### 05. Stored XSS em `updatefaculty.php`
+### 02. Stored XSS in `updatefaculty.php`
 
-* **Vetor de CVSS v3.1:** `CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N` (**6.1 - Médio**)
+* **CVSS v3.1 Vector:** `CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:L/A:N` (**6.1 - Medium**)
 * **CWE:** CWE-79 (Cross-site Scripting)
-* **Componente Afetado:** `updatefaculty.php` (Campos `fname`, `faname`, `addrs`, `gender`, `city`, `pass`)
+* **Affected Component:** `updatefaculty.php` (`fname`, `faname`, `addrs`, `gender`, `city`, `pass` fields)
 
-**Descrição:**
+**Description:**
 
-Os dados enviados através dos campos do formulário são armazenados diretamente no banco de dados sem sanitização prévia. Ao renderizar a interface administrativa, a aplicação exibe esses dados no atributo `value="..."` de inputs HTML sem aplicar a devida codificação de caracteres (*HTML entity encoding*). O campo `fname` aceita até 50 caracteres (suficiente para injetar e executar scripts arbitrários no contexto do navegador do administrador).
+Data submitted through the form fields is stored directly into the database without prior sanitization. When rendering the administrative interface, the application displays this data inside the `value="..."` attribute of HTML input tags without applying proper HTML entity encoding. The `fname` field accepts up to 50 characters (sufficient to inject and execute arbitrary scripts within the context of the administrator's browser).
 
 ---
 
-## 📁 Estrutura de Arquivos
+## 📁 5. Directory Structure
 
-Cada pasta (`04-sqli` e `05-stored-xss`) contém o seguinte conjunto padronizado de documentos:
+Each folder (`01-sqli` and `02-stored-xss`) contains the following standardized set of documents:
 
 ```text
-├── 04-sqli/
-│   ├── REPORT.md          # Relatório técnico completo e passo a passo
-│   ├── poc.sh             # Script de PoC funcional e não-destrutivo
-│   ├── VULDB.md           # Modelo de submissão formatado para a VulDB
+├── 01-sqli/
+│   ├── REPORT.md          # Full technical step-by-step report
+│   ├── poc.sh             # Functional, non-destructive PoC script
+│   ├── VULDB.md           # Submission template formatted for VulDB
 │   ├── ADVISORY.md        # GitHub Security Advisory draft
-│   ├── VENDOR-EMAIL.md    # Minuta de e-mail formal para comunicação ao desenvolvedor
-│   └── NIST.md            # Relatório no padrão NVD / NIST
-└── 05-stored-xss/
+│   ├── VENDOR-EMAIL.md    # Formal email draft for vendor disclosure
+│   └── NIST.md            # Report following NVD / NIST standards
+└── 02-stored-xss/
     ├── REPORT.md
     ├── poc.sh
     ├── VULDB.md
     ├── ADVISORY.md
     ├── VENDOR-EMAIL.md
     └── NIST.md
+
+```
 
 ```
 
