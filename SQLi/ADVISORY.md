@@ -57,10 +57,10 @@ $rs=mysqli_query($connect,$sql);
 
 ### Necessary Conditions
 
-* Authentication: None (via Broken Access Control — item 00; original design requires admin session)
-* User Interaction: None
+* Authentication: Minimun (via Broken Access Control — item 00; original design requires admin session)
+* User Interaction: Minimum
 * Access Vector: Remote (Network) — GET method (+POST on UPDATE)
-* Prerequisites: None on the target (item 00). If the original session requirement were enforced, PR would increase and the score would decrease.
+* Prerequisites: Minimun. If the original session requirement were enforced, PR would increase and the score would decrease.
 
 ---
 
