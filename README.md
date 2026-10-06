@@ -75,9 +75,25 @@ Data submitted through the form fields is stored directly into the database with
 
 ---
 
+### 03. SQL Injection in viewquery.php
+- **Internal ID:** CC-2026-16
+- **CVSS v3.1 Vector:** `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N` (9.1 - Critical)
+- **CWE:** CWE-89 (SQL Injection)
+- **Affected Component:** `viewquery.php` (`eid` parameter)
+
+#### Description:
+The flaw occurs in the `viewquery.php` file because the `eid` parameter is incorporated directly into SQL statements (`SELECT` and `UPDATE`) without proper input validation or the use of parameterized queries. Since the parameter is concatenated within single quotes in a string context, closing the quote allows arbitrary `UNION SELECT` commands to be executed. The target table exposes 4 columns, enabling unauthenticated extraction of sensitive data and administrator credentials from the database.
+
+#### Remediation:
+- Implement parameterized queries (Prepared Statements) with parameter binding via PDO or MySQLi across 100% of queries.
+- Apply strict type casting for numeric identifiers (`(int)$id`).
+- Disable direct display of database error messages to the client.
+- Ensure script execution terminates (`exit;`) immediately following session authorization checks.
+
+---
 ## 📁 5. Directory Structure
 
-Each folder (`SQLi` and `Stored-XSS`) contains the following standardized set of documents:
+Cada diretório (`SQLi`, `Stored-XSS` e `viewquery-SQLi`) contém o seguinte conjunto padronizado de documentos e relatórios técnicos[cite: 6]:
 
 ```text
 ├── SQLi/
@@ -87,12 +103,20 @@ Each folder (`SQLi` and `Stored-XSS`) contains the following standardized set of
 │   ├── ADVISORY.md        # GitHub Security Advisory draft
 │   ├── VENDOR-EMAIL.md    # Formal email draft for vendor disclosure
 │   └── NIST.md            # Report following NVD / NIST standards
-└── Stored-XSS/
-    ├── REPORT.md
-    ├── poc.sh
-    ├── VULDB.md
-    ├── ADVISORY.md
-    ├── VENDOR-EMAIL.md
-    └── NIST.md
-
-```
+├── Stored-XSS/
+│   ├── REPORT.md
+│   ├── poc.sh
+│   ├── VULDB.md
+│   ├── ADVISORY.md
+│   ├── VENDOR-EMAIL.md
+│   └── NIST.md
+└── viewquery-SQLi/
+    ├── README.md          # Overview and summary of the finding
+    ├── REPORT.md          # Full technical step-by-step report
+    ├── poc.sh             # Functional, non-destructive PoC script
+    ├── VULDB.md           # Submission template formatted for VulDB
+    ├── ADVISORY.md        # GitHub Security Advisory draft
+    ├── VENDOR-EMAIL.md    # Formal email draft for vendor disclosure
+    ├── NIST.md            # Report following NVD / NIST standards
+    ├── evidencia-codigo-16-viewquery-sqli.png
+    └── evidencia-web-16-viewquery-sqli.png
