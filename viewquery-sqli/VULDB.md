@@ -52,7 +52,7 @@ Observed evidence:
 ## Timeline
 
 - 2026-08-02: Vulnerability discovered and confirmed (local lab).
-- 2026-08-02: Advisory prepared / VulDB submission drafted.
+- 2026-10-06: Advisory prepared / VulDB submission drafted.
 
 ## Credits
 
