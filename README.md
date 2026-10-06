@@ -1,7 +1,7 @@
 # Advisory-CloudClassroom-PHP-Project-1.0
 *Security Advisories & Vulnerability Reports*
 
-This repository contains security reports, Proofs of Concept (PoC), and responsible disclosure documentation regarding vulnerabilities identified in the `updatefaculty.php` component.
+This repository contains security reports, Proofs of Concept (PoC), and responsible disclosure documentation regarding vulnerabilities identified in the `updatefaculty.php`, and `viewquery.php` components.
 
 ---
 
@@ -31,7 +31,7 @@ sudo docker run -d --name cloudclassroom-lab --restart=always -p 9292:80 bladsca
 
 ## 🔍 2. Subject of Study
 
-By running the command below inside the directory containing the CloudClassroom repository, you can observe that the target file for analysis is highlighted (`updatefaculty.php`):
+By running the command below inside the directory containing the CloudClassroom repository, you can observe that the target file for analysis is highlighted (ex.:`updatefaculty.php`):
 
 ```bash
 sudo docker run --rm -v $(pwd):/src returntocorp/semgrep semgrep scan --config=auto --no-git-ignore /src
